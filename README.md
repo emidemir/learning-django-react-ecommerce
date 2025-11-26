@@ -1,0 +1,1 @@
+I created this project for practicing redux, redux tool kit, etc.
