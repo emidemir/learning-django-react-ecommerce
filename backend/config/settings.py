@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,9 +38,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Django Apps
+    'users',
+
+    # JWT
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist', # For blacklisting tokens after logout
+
+    # DRF
+    'rest_framework',
+
+    # CORS
+    'corsheaders',
+    
+    # Google OAuth: https://docs.allauth.org/en/dev/installation/quickstart.html
+    'allauth',
+    'allauth.account',
+    # Optional -- requires install using `django-allauth[socialaccount]`.
+    'allauth.socialaccount',
+
+    # social media providers(i.e. google, facebook, etc.)
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Corse middleware must be added to the beginning
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -47,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware", # Needed for allauth
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -54,7 +78,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, '..', 'frontend/build') # React build is located here
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,8 +100,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -110,13 +140,97 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ============================================================
+# ===================CUSTOM CONFIGURATIONS====================
+# ============================================================
+
+# ========== REST FRAMEWORK DEFAULTS ==========
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissions',
+    ],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 100
+}
+
+# ========== STATIC FOLDERS ==========
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '..', 'frontend', 'build', 'static'),
+    os.path.join(BASE_DIR, '..', 'frontend', 'build'),
+]
+
+# ========== MEDIA FOLDERS ==========
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# ========== DEFAULT USER MODEL ==========
+AUTH_USER_MODEL = 'users.CustomUser'
+
+# ========== SIMPLE JWT CONFS ==========
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+from datetime import timedelta
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=25),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": False,
+
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+}
+
+# ========== ALLAUTH ==========
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': os.getenv('GOOGLE_OAUTH_CLIENT_ID'),
+            'secret': os.getenv('GOOGLE_OAUTH_CLIENT_SECRET'),
+            'key': ''
+        }
+    }
+}
+
+SOCIALACCOUNT_LOGIN_ON_GET = True # For the classic google signin UI to show up or not.
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'auth/login/'
+
+# ========== CORS ==========
+# https://pypi.org/project/django-cors-headers/
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+CORS_ALLOW_CREDENTIALS = False
+
+# ========== EMAIL SYSTEM ==========
+# I used django's default email system for learning purposes. 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'server@localhost.com'
