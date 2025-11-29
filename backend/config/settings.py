@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Django Apps
     'users',
+    'orders',
+    'products',
+    'phonenumber_field', # https://django-phonenumber-field.readthedocs.io/en/latest/
+    'django_countries', # https://pypi.org/project/django-countries/
 
     # JWT
     'rest_framework_simplejwt',

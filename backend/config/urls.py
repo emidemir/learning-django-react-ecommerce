@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView, TokenVerifyView
 
 # ===== AUTHENTICATION ENDPOINTS =====
-from users.views import sign_in, sign_up, google_oauth, logout
+from users.views import signin, signup, google_oauth, logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,8 +20,8 @@ urlpatterns = [
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
     # Authentication
-    path('auth/signin/', sign_in, name='signin'),
-    path('auth/signup/', sign_up, name='signup'),
+    path('auth/signin/', signin, name='signin'),
+    path('auth/signup/', signup, name='signup'),
     path('auth/oauth/', google_oauth, name='google-auth'),
     path('auth/logout/', logout, name='logout'),
 

@@ -9,6 +9,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // Page imports for router
 import App from './App';
 import ProfilePage from './pages/ProfilePage'
+import AuthPage from './pages/AuthPage'
 
 
 // Redux imports
@@ -19,6 +20,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 const router = createBrowserRouter([
 	{path: '/', element:<App/>},
+	{path:'/auth', element:<AuthPage/>},
 	{path:'/profile', element:<ProfilePage/>},
 ])
 
