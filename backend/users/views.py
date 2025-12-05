@@ -23,8 +23,7 @@ User = get_user_model()
 def signup(request):
     """Traditional signup via signup form"""
     # 1) Get data from the request
-    firstName = request.data.get('firstName') 
-    lastName = request.data.get('lastName')
+    fullname = request.data.get('fullName')
     email = request.data.get('email')
     password = request.data.get('password')
 
@@ -44,9 +43,7 @@ def signup(request):
 
         # 4) Create user
         newUser = CustomUser.objects.create_user(
-            username = firstName,
-            first_name = firstName,
-            last_name = lastName,
+            username = fullname,
             email = email,
             password=password
         )
@@ -60,8 +57,6 @@ def signup(request):
             'user':{
                 'id': newUser.id,
                 'username': newUser.username,
-                'firstName': newUser.first_name,
-                'lastName': newUser.last_name,
                 'email': newUser.email,
             }
         },status=status.HTTP_201_CREATED)
@@ -109,8 +104,6 @@ def signin(request):
         'user': {
             'id': user.id,
             'username': user.username,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
             'email': user.email,
         }
     }, status=status.HTTP_200_OK)
@@ -178,8 +171,7 @@ def google_oauth(request):
         except CustomUser.DoesNotExist:
             user = CustomUser.objects.create_user(
                 email=email,
-                username=firstName,
-                first_name=firstName,
+                username=f"{firstName} {lastName}",
                 last_name=lastName
             )
 
@@ -191,8 +183,6 @@ def google_oauth(request):
                 'id': user.id,
                 'userName': user.username,
                 'email': user.email,
-                'firstName': user.first_name,
-                'lastName': user.last_name,
             },
         }, status=status.HTTP_200_OK)
     

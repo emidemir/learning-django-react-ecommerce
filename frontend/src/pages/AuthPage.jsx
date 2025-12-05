@@ -19,6 +19,10 @@ const AuthPage = () => {
     setTabIndex(newValue);
   };
 
+  const handleGoogleAuth = (credentials) => {
+    console.log('Google response:', credentials);
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
@@ -54,8 +58,8 @@ const AuthPage = () => {
 
           {/* Render Login or Register based on Tab Index */}
           <Box sx={{ width: '100%' }}>
-            {tabIndex === 0 && <LoginForm />}
-            {tabIndex === 1 && <RegisterForm />}
+            {tabIndex === 0 && <LoginForm handleGoogleAuth={handleGoogleAuth} />}
+            {tabIndex === 1 && <RegisterForm handleGoogleAuth={handleGoogleAuth} />}
           </Box>
           
         </Paper>
