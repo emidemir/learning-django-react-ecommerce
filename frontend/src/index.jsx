@@ -6,23 +6,31 @@ import reportWebVitals from './reportWebVitals';
 // Google OAuth import
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-// Page imports for router
-import App from './App';
-import ProfilePage from './pages/ProfilePage'
-import AuthPage from './pages/AuthPage'
-
-
 // Redux imports
-import { store } from './app/store'
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux';
+import store from './app/store'
+
+// Page imports for router
+import HomePage from './pages/HomePage';
+import AuthPage from './pages/AuthPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import ProfilePage from './pages/ProfilePage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
+import NotFoundPage from './pages/NotFoundPage'; // Import the new page
+
 // Route imports
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 const router = createBrowserRouter([
-	{path: '/', element:<App/>},
-	{path:'/auth', element:<AuthPage/>},
-	{path:'/profile', element:<ProfilePage/>},
-])
+	{path: "/",element: <HomePage />,},
+	{path: "/auth",element: <AuthPage />,},
+	{path: "/product/:id",element: <ProductDetailsPage />,},
+	{path: "/cart",element: <CartPage />,},
+	{path: "/checkout",element: <CheckoutPage />,},
+	{path: "/profile",element: <ProfilePage />,},
+	{path: "*", element: <NotFoundPage />,}
+  ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

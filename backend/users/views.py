@@ -19,7 +19,7 @@ import requests
 User = get_user_model()
 
 @api_view(["POST"])
-@permission_classes(['AllowAny'])
+@permission_classes([AllowAny])
 def signup(request):
     """Traditional signup via signup form"""
     # 1) Get data from the request
@@ -59,18 +59,19 @@ def signup(request):
             'refresh': str(token),
             'user':{
                 'id': newUser.id,
-                'email': newUser.email,
+                'username': newUser.username,
                 'firstName': newUser.first_name,
                 'lastName': newUser.last_name,
+                'email': newUser.email,
             }
         },status=status.HTTP_201_CREATED)
     except Exception as E:
         return Response({
-            'message': E
+            'message': str(E)
         },status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])
-@permission_classes(["AllowAny"])
+@permission_classes([AllowAny])
 def signin(request):
     """Traditional signin via signin form"""
     # 1) Get data from the request
@@ -107,6 +108,7 @@ def signin(request):
         'refresh': refresh,
         'user': {
             'id': user.id,
+            'username': user.username,
             'firstName': user.first_name,
             'lastName': user.last_name,
             'email': user.email,
@@ -114,7 +116,7 @@ def signin(request):
     }, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def logout(request):
     """Logout by blacklisting the Refresh token. Keep access token short-lived for max security"""
     try:
@@ -187,6 +189,7 @@ def google_oauth(request):
             'refresh': refresh,
             'user': {
                 'id': user.id,
+                'userName': user.username,
                 'email': user.email,
                 'firstName': user.first_name,
                 'lastName': user.last_name,
