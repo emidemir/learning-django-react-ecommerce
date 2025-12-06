@@ -36,7 +36,7 @@ const ProductDetailsPage = () => {
         {/* Top Section: Product Info */}
         <Grid container spacing={6}>
           {/* Left: Image */}
-          <Grid item xs={12} md={6}>
+          <Grid>
             <Box 
               component="img"
               src={product.image}
@@ -51,7 +51,7 @@ const ProductDetailsPage = () => {
           </Grid>
 
           {/* Right: Details */}
-          <Grid item xs={12} md={6}>
+          <Grid>
             <Box>
               <Chip label={product.category} color="primary" variant="outlined" size="small" sx={{ mb: 2 }} />
               

@@ -29,7 +29,7 @@ const ProductList = () => {
 
       <Grid container spacing={4}>
         {MOCK_PRODUCTS.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={4}>
+          <Grid key={product.id}>
             <ProductCard product={product} />
           </Grid>
         ))}

@@ -33,14 +33,14 @@ const CartPage = () => {
 
         <Grid container spacing={4}>
           {/* Left Column: Cart Items */}
-          <Grid item xs={12} md={8}>
+          <Grid>
             {MOCK_CART_ITEMS.map((item) => (
               <CartItem key={item.id} item={item} />
             ))}
           </Grid>
 
           {/* Right Column: Order Summary */}
-          <Grid item xs={12} md={4}>
+          <Grid>
             <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 Order Summary

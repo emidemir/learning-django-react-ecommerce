@@ -19,7 +19,7 @@ const Footer = () => {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={4}>
+          <Grid>
             <Typography variant="h6" color="text.primary" gutterBottom>
               E-SHOP
             </Typography>
@@ -29,7 +29,7 @@ const Footer = () => {
             </Typography>
           </Grid>
           
-          <Grid item xs={6} sm={4}>
+          <Grid>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Links
             </Typography>
@@ -40,7 +40,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={6} sm={4}>
+          <Grid>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Legal
             </Typography>

@@ -88,7 +88,7 @@ def signin(request):
             'message': 'No user found!',
         },status=status.HTTP_400_BAD_REQUEST)
         
-    user = authenticate(username, password)
+    user = authenticate(username = username, password = password)
 
     if not user:
         return Response({
@@ -99,8 +99,8 @@ def signin(request):
     refresh = RefreshToken.for_user(user)
     
     return Response({
-        'access': refresh.token,
-        'refresh': refresh,
+        'access': str(refresh.access_token),
+        'refresh': str(refresh),
         'user': {
             'id': user.id,
             'username': user.username,

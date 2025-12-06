@@ -24,16 +24,16 @@ const ProfileSettings = () => {
 
       {/* Form Fields */}
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+        <Grid>
           <TextField label="First Name" defaultValue="John" fullWidth />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid>
           <TextField label="Last Name" defaultValue="Doe" fullWidth />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid>
           <TextField label="Email Address" defaultValue="john.doe@example.com" fullWidth />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid>
           <TextField label="Phone Number" defaultValue="+1 (555) 123-4567" fullWidth />
         </Grid>
         <Grid item xs={12}>

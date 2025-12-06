@@ -35,7 +35,7 @@ const ProfilePage = () => {
         <Grid container spacing={4}>
           
           {/* Left Sidebar: Navigation */}
-          <Grid item xs={12} md={3}>
+          <Grid>
             <Paper elevation={0} variant="outlined" sx={{ overflow: 'hidden' }}>
               <List component="nav" disablePadding>
                 
@@ -73,7 +73,7 @@ const ProfilePage = () => {
           </Grid>
 
           {/* Right Content Area */}
-          <Grid item xs={12} md={9}>
+          <Grid>
             <Paper elevation={1} sx={{ p: 4, borderRadius: 2 }}>
               {activeTab === 'orders' && (
                 <>

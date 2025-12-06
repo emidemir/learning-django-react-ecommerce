@@ -5,7 +5,7 @@ const storedAccessToken = localStorage.getItem('access_token');
 const storedRefreshToken = localStorage.getItem('refresh_token');
 
 const initialState = {
-    user: storedUser ? JSON.parse(storedUser) : null,
+    user: storedUser ? storedUser : null,
     access_token: storedAccessToken || null,
     refresh_token: storedRefreshToken || null,
 }

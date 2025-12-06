@@ -20,19 +20,19 @@ const steps = ['Shipping Address', 'Payment Details', 'Review Order'];
 // --- Sub-component: Address Form ---
 const AddressForm = () => (
   <Grid container spacing={3}>
-    <Grid item xs={12} sm={6}>
+    <Grid>
       <TextField required label="First name" fullWidth />
     </Grid>
-    <Grid item xs={12} sm={6}>
+    <Grid>
       <TextField required label="Last name" fullWidth />
     </Grid>
-    <Grid item xs={12}>
+    <Grid xs={12}>
       <TextField required label="Address line 1" fullWidth />
     </Grid>
-    <Grid item xs={12} sm={6}>
+    <Grid>
       <TextField required label="City" fullWidth />
     </Grid>
-    <Grid item xs={12} sm={6}>
+    <Grid>
       <TextField required label="Zip / Postal code" fullWidth />
     </Grid>
   </Grid>
