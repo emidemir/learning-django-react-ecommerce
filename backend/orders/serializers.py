@@ -3,16 +3,26 @@ from rest_framework import serializers
 from .models import Cart, CartItem, Order, OrderItem, ShippingAddress
 
 class CartSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model =  Cart
+        fields = '__all__'
 
 class CartItemSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = CartItem
+        fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model  = Order
+        fields = '__all__'
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = ShippingAddress
+        fields = '__all__'

@@ -1,18 +1,24 @@
 from rest_framework import viewsets
 
 from .models import Cart, CartItem, Order, OrderItem, ShippingAddress
+from .serializers import CartSerializer, CartItemSerializer, OrderSerializer, OrderItemSerializer, ShippingAddressSerializer
 
 class CartViewset(viewsets.ModelViewSet):
-    pass
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
 
 class CartItemViewset(viewsets.ModelViewSet):
-    pass
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer
 
 class OrderViewset(viewsets.ModelViewSet):
-    pass
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 class OrderItemViewset(viewsets.ModelViewSet):
-    pass
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
 
 class ShippingAddressViewset(viewsets.ModelViewSet):
-    pass
+    queryset = ShippingAddress.objects.all()
+    serializer_class = ShippingAddressSerializer
